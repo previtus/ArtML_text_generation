@@ -84,7 +84,7 @@ _(it definitelly likes white rabbits... they appear in many generated fragments)
 			the riog of the fan and take to 			the ring of the fan and the way 			the doeat and the high ther wou
 			the found about the srailer was 			the doeat.  i don't know wher is 			the ricture you ar a light of the 			srailer park.
 
-_(Seems to be mimicking at least the same structure as in the input file - of a theatrical play. But often the generated content is nonsence...)_
+_(Seems to be mimicking at least the same structure as in the input file - of a theatrical play. But often the generated content is nonsence... Laura is talking a lot to herself... I was hoping for some cryptic "Owls are not what they seem to be" to appear)_
 
 # Links:
 Tutorial https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
