@@ -86,5 +86,7 @@ _(it definitelly likes white rabbits... they appear in many generated fragments)
 
 _(Seems to be mimicking at least the same structure as in the input file - of a theatrical play. But often the generated content is nonsence... Laura is talking a lot to herself... I was hoping for some cryptic "Owls are not what they seem to be" to appear)_
 
+<p align="center"> <img src="https://github.com/previtus/ArtML_text_generation/blob/master/imgs/the-owls-are-not-what-they-seem.jpg"/></p>
+
 # Links:
 Tutorial https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
