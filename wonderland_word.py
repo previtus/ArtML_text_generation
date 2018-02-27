@@ -5,7 +5,7 @@ epochs = 1
 batch_size = 64
 name = "wonderland"
 
-train_model_on_file(txt_file, name, epochs, batch_size, 'char', None)
+train_model_on_file(txt_file, name, epochs, batch_size, 'word', None)
 
 
 """
@@ -17,3 +17,5 @@ train_model_on_file(txt_file, name, epochs, batch_size, 'char', None)
 
 #model_file = "wonderland-weights-41-1.2619-bigger.hdf5"
 #use_model(txt_file, 'char', model_file)
+#model_file = "wonderland-weights-00-6.8889-biggerword.hdf5"
+#use_model(txt_file, 'word', model_file)

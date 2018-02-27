@@ -5,7 +5,7 @@ epochs = 50
 batch_size = 64
 name = "twinpeaks"
 
-train_model_on_file(txt_file, name, epochs, batch_size, 'char', None)
+train_model_on_file(txt_file, name, epochs, batch_size, 'word', None)
 
 """
 /twinpeaks-weights-05-1.7959-bigger.hdf5
@@ -15,4 +15,4 @@ train_model_on_file(txt_file, name, epochs, batch_size, 'char', None)
 """
 
 #model_file = "twinpeaks-weights-19-1.3402-bigger.hdf5"
-#use_model(txt_file, model_file)
+#use_model(txt_file, 'word', model_file)
