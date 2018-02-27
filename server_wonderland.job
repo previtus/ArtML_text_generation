@@ -12,7 +12,7 @@ source activate $KERAS_ENV
 cd /home/vruzicka/lstm_charbased_tutorial
 
 #run program
-python lstm_test.py
+python wonderland_word.py
 
 # run this with: sbatch server_wonderland.job
 
