@@ -6,8 +6,9 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
+import string
 
-def load_data(txt_file):
+def load_data_charbased(txt_file):
     raw_text = open(txt_file).read()
     raw_text = raw_text.lower()
     # create mapping of unique chars to integers
@@ -39,6 +40,38 @@ def load_data(txt_file):
     y = np_utils.to_categorical(dataY)
     return X, y, dataX, n_vocab, int_to_char
 
+def load_data_wordbased(txt_file):
+    rawtext = open(txt_file,'r').read().split('\n')
+    rawtext = ' '.join(rawtext)
+    rawtext = [word.strip(string.punctuation) for word in rawtext.split()]
+    rawtext = ' '.join(rawtext)
+    rawtext = rawtext.replace('-', ' ')
+    rawtext = ' '.join(rawtext.split())
+    raw_text = rawtext.split()
+    unique_words = sorted(list(set(raw_text)))
+    n_vocab = len(unique_words)
+    print("Total Vocab:", n_vocab)
+    word_to_int = dict((w, i) for i, w in enumerate(unique_words))
+    int_to_word = dict((i, w) for i, w in enumerate(unique_words))
+    n_words = len(raw_text)
+    print (n_words)
+
+    seq_length = 100
+    dataX = []
+    dataY = []
+    for i in range(0, n_words - seq_length):
+        seq_in = raw_text[i: i + seq_length]
+        seq_out = raw_text[i + seq_length]
+        dataX.append([word_to_int[word] for word in seq_in])
+        dataY.append(word_to_int[seq_out])
+    n_patterns = len(dataX)
+    print('Total patterns:', n_patterns)
+
+    X = numpy.reshape(dataX, (n_patterns, seq_length, 1)) / float(n_vocab)
+    y = np_utils.to_categorical(dataY)
+
+    return X, y, dataX, n_vocab, int_to_word
+
 def build_model(X, y):
     # define the LSTM model
     model = Sequential()
@@ -51,19 +84,22 @@ def build_model(X, y):
 
     return model
 
-def train_model_on_file(txt_file, name, epochs, batch_size, continue_from_checkpoint=None):
+def train_model_on_file(txt_file, name, epochs, batch_size, type='char', continue_from_checkpoint=None):
 
     # load ascii text and covert to lowercase
-    X, y, _, _, _ = load_data(txt_file)
+    if type is 'char':
+        X, y, _, _, _ = load_data_charbased(txt_file)
+    elif type is 'word':
+        X, y, _, _, _ = load_data_wordbased(txt_file)
 
     model = build_model(X, y)
 
-    extra = ""
+    extra = type
     if continue_from_checkpoint is not None:
         print("Continuing training model from a checkpoint", continue_from_checkpoint)
         print("(Notice the loss (error) staring already around similar value.)")
         model.load_weights(continue_from_checkpoint)
-        extra = "fromchkp"
+        extra += "fromchkp"
 
     ###### TRAIN MODEL ###############################
 
@@ -75,8 +111,12 @@ def train_model_on_file(txt_file, name, epochs, batch_size, continue_from_checkp
 
     model.fit(X, y, epochs=epochs, batch_size=batch_size, callbacks=callbacks_list)
 
-def use_model(txt_file, model_file = "weights-improvement-47-1.2219-bigger.hdf5"):
-    X, y, dataX, n_vocab, int_to_char = load_data(txt_file)
+def use_model(txt_file, type='char', model_file = "weights-improvement-47-1.2219-bigger.hdf5"):
+    if type is 'char':
+        X, y, dataX, n_vocab, int_to_txt = load_data_charbased(txt_file)
+    elif type is 'word':
+        X, y, dataX, n_vocab, int_to_txt = load_data_wordbased(txt_file)
+
     model = build_model(X, y)
 
     model.load_weights(model_file)
@@ -88,15 +128,21 @@ def use_model(txt_file, model_file = "weights-improvement-47-1.2219-bigger.hdf5"
     start = numpy.random.randint(0, len(dataX) - 1)
     pattern = dataX[start]
     print("Seed:")
-    print("\"", ''.join([int_to_char[value] for value in pattern]), "\"")
+
+    space = ''
+    if type is 'word':
+        space = ' '
+
+    print("\"", space.join([int_to_txt[value] for value in pattern]), "\"")
+
     # generate characters
     for i in range(1000):
         x = numpy.reshape(pattern, (1, len(pattern), 1))
         x = x / float(n_vocab)
         prediction = model.predict(x, verbose=0)
         index = numpy.argmax(prediction)
-        result = int_to_char[index]
-        seq_in = [int_to_char[value] for value in pattern]
+        result = int_to_txt[index]+space
+        seq_in = [int_to_txt[value] for value in pattern]
         sys.stdout.write(result)
         pattern.append(index)
         pattern = pattern[1:len(pattern)]
