@@ -9,10 +9,10 @@ set -x
 #move to working directory
 module load keras/2.0.6_anaconda
 source activate $KERAS_ENV
-cd /home/vruzicka/lstm_charbased_tutorial
+cd /home/vruzicka/ArtML_text_generation
 
 #run program
-python twinpeaks_word.py
+python twinpeaks.py
 
 # run this with: sbatch server_twinpeaks.job
 

@@ -1,7 +1,7 @@
 from lstm_functions import train_model_on_file, use_model
 
 txt_file = "twinpeaks.txt"
-epochs = 50
+epochs = 250
 batch_size = 64
 name = "twinpeaks"
 

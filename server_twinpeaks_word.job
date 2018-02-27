@@ -12,7 +12,7 @@ source activate $KERAS_ENV
 cd /home/vruzicka/ArtML_text_generation
 
 #run program
-python wonderland.py
+python twinpeaks_word.py
 
-# run this with: sbatch server_wonderland.job
+# run this with: sbatch server_twinpeaks.job
 

@@ -1,7 +1,7 @@
 from lstm_functions import train_model_on_file, use_model
 
 txt_file = "wonderland.txt"
-epochs = 1
+epochs = 250
 batch_size = 64
 name = "wonderland"
 
