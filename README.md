@@ -1,5 +1,5 @@
 # ArtML_text_generation
-Simple implementation of the charbased LSTM used to generate text. Part of ML4Art / Art4ML class
+Simple implementation of the charbased LSTM used to generate text. Part of ML4Art / Art4ML class (link https://sites.google.com/site/artml2018/)
 
 # Installation:
 
